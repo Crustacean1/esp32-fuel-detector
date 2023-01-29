@@ -69,20 +69,17 @@ void LcdDisplay::command(uint8_t cmd) {
 
 void LcdDisplay::backlight() {
   _lcd_mask |= LCD_BACKLIGHT_BIT;
-  ESP_LOGI(TAG, "backlight");
   return command(0);
 }
 
 void LcdDisplay::clear() {
   command(LCD_CLEARDISPLAY);
-  ESP_LOGI(TAG, "clear");
-  vTaskDelay(1);
+  ets_delay_us(2000);
 }
 
 void LcdDisplay::home() {
   command(LCD_RETURNHOME);
-  ESP_LOGI(TAG, "home");
-  vTaskDelay(1);
+  ets_delay_us(2000);
 }
 
 void LcdDisplay::print(const char *message) {
@@ -97,23 +94,14 @@ void LcdDisplay::init() {
   vTaskDelay(100);
   _lcd_mask = 0x0;
   sendNibble(0);
-  vTaskDelay(1);
   sendNibble(0x30);
-  vTaskDelay(1);
   sendNibble(0x30);
-  vTaskDelay(1);
   sendNibble(0x30);
-  vTaskDelay(1);
   sendNibble(0x20);
-  vTaskDelay(1);
 
   command(0x28);
-  vTaskDelay(1);
   command(0x0C);
-  vTaskDelay(1);
   command(0x01);
-  vTaskDelay(1);
   command(0x06);
-  vTaskDelay(1);
   ESP_LOGI(TAG, "Initialization complete");
 }
